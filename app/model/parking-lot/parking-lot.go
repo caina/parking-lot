@@ -7,7 +7,7 @@ import (
 
 type ParkingLot struct {
 	slots   int
-	tickets []*Ticket
+	tickets []Ticket
 }
 
 func (parkingLot *ParkingLot) CanPark() bool {
@@ -31,8 +31,12 @@ func (parkingLot *ParkingLot) Park(ticket Ticket) bool {
 		return false
 	}
 
-	parkingLot.tickets = append(parkingLot.tickets, &ticket)
+	parkingLot.tickets = append(parkingLot.tickets, ticket)
 	return true
+}
+
+func (parkingLot *ParkingLot) RemoveCar(ticketId string) {
+
 }
 
 func (parkingLot *ParkingLot) ToString() string {
@@ -43,4 +47,8 @@ func (parkingLot *ParkingLot) ToString() string {
 	}
 
 	return buffer.String()
+}
+
+func (parkingLot *ParkingLot) GetTickets() []Ticket {
+	return parkingLot.tickets
 }

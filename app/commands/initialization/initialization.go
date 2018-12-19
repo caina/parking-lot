@@ -1,12 +1,12 @@
 package initialization
 
 import (
-	"github.com/parking-lot/app/config"
+	"github.com/parking-lot/app/client"
 	"github.com/parking-lot/app/model/parking-lot"
 	"strconv"
 )
 
-func Command(args []string, client *config.Client) {
+func Command(args []string, client *client.Client) {
 	slots, err := strconv.Atoi(args[0])
 	if err != nil {
 		client.Send <- "Fail: The slots must be a number!"

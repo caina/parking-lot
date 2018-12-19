@@ -1,12 +1,12 @@
 package park
 
 import (
-	"github.com/parking-lot/app/config"
+	"github.com/parking-lot/app/client"
 	"github.com/parking-lot/app/model/car"
 	"github.com/parking-lot/app/model/ticket"
 )
 
-func Command(args []string, client *config.Client) {
+func Command(args []string, client *client.Client) {
 	newTicket := ticket.SueTicket()
 	parkingCar := &car.Car{
 		Plate: args[0],

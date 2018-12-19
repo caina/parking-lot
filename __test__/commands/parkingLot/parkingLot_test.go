@@ -1,14 +1,14 @@
 package parkingLot
 
 import (
+	"github.com/parking-lot/app/client"
 	"github.com/parking-lot/app/commands/initialization"
-	"github.com/parking-lot/app/config"
 	"testing"
 )
 
 func TestParkingLotCreation(t *testing.T) {
 
-	mockClient := config.Client{
+	mockClient := client.Client{
 		Send: make(chan string),
 		Stop: make(chan bool),
 	}

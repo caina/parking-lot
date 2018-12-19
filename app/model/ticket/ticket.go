@@ -29,3 +29,7 @@ func (ticket *Ticket) SetCar(car car.Car) bool {
 func (ticket *Ticket) ToString() string {
 	return ticket.time.Format("3:04 PM") + " > " + ticket.car.ToString() + ", ticket: " + ticket.code
 }
+
+func (ticket *Ticket) GetCode() string {
+	return ticket.code
+}

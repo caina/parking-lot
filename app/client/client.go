@@ -1,4 +1,4 @@
-package config
+package client
 
 import . "github.com/parking-lot/app/model/parking-lot"
 

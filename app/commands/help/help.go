@@ -2,10 +2,10 @@ package help
 
 import (
 	"bytes"
-	"github.com/parking-lot/app/config"
+	"github.com/parking-lot/app/client"
 )
 
-func Command(client *config.Client) {
+func Command(client *client.Client) {
 	buffer := bytes.Buffer{}
 	buffer.WriteString("list of commands available \n")
 	buffer.WriteString("-- initialization \n")

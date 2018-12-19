@@ -3,12 +3,13 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/parking-lot/app/client"
 	"github.com/parking-lot/app/commands/exit"
 	"github.com/parking-lot/app/commands/help"
 	"github.com/parking-lot/app/commands/initialization"
+	"github.com/parking-lot/app/commands/leave"
 	"github.com/parking-lot/app/commands/park"
 	"github.com/parking-lot/app/commands/status"
-	"github.com/parking-lot/app/config"
 	"os"
 	"strings"
 )
@@ -17,7 +18,7 @@ func main() {
 	fmt.Println("------------------- Welcome to parking lot! ---------------")
 	fmt.Println("------ use the command help to list all the options -------")
 
-	resultChan := config.Client{
+	resultChan := client.Client{
 		Send: make(chan string),
 		Stop: make(chan bool),
 	}
@@ -65,6 +66,11 @@ func main() {
 		case "park":
 			go func() {
 				park.Command(args[1:], &resultChan)
+				return
+			}()
+		case "leave":
+			go func() {
+				leave.Command(args[1:], &resultChan)
 				return
 			}()
 		}
