@@ -1,6 +1,9 @@
 package config
 
+import . "github.com/parking-lot/app/model/parking-lot"
+
 type Client struct {
-	Send chan string
-	Stop chan bool
+	Send    chan string
+	Stop    chan bool
+	Parking ParkingLot
 }

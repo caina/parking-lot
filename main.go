@@ -5,25 +5,43 @@ import (
 	"fmt"
 	"github.com/parking-lot/app/commands/exit"
 	"github.com/parking-lot/app/commands/help"
+	"github.com/parking-lot/app/commands/initialization"
+	"github.com/parking-lot/app/commands/park"
+	"github.com/parking-lot/app/commands/status"
 	"github.com/parking-lot/app/config"
 	"os"
+	"strings"
 )
 
 func main() {
 	fmt.Println("------------------- Welcome to parking lot! ---------------")
-	fmt.Println("------ Inform the number of slots in this parking lot -----")
+	fmt.Println("------ use the command help to list all the options -------")
 
 	resultChan := config.Client{
 		Send: make(chan string),
 		Stop: make(chan bool),
 	}
+	defer close(resultChan.Stop)
+	defer close(resultChan.Send)
+
+	go func() {
+		for {
+			select {
+			case result := <-resultChan.Send:
+				fmt.Println(result)
+			case <-resultChan.Stop:
+				os.Exit(1)
+			}
+		}
+	}()
 
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
-		text := scanner.Text()
+		input := scanner.Text()
+		args := strings.Fields(input)
 
 		// should be dynamic
-		switch text {
+		switch args[0] {
 		case "help":
 			go func() {
 				help.Command(&resultChan)
@@ -34,17 +52,21 @@ func main() {
 				exit.Command(&resultChan)
 				return
 			}()
+		case "init":
+			go func() {
+				initialization.Command(args[1:], &resultChan)
+				return
+			}()
+		case "status":
+			go func() {
+				status.Command(&resultChan)
+				return
+			}()
+		case "park":
+			go func() {
+				park.Command(args[1:], &resultChan)
+				return
+			}()
 		}
-
-		go func() {
-			for {
-				select {
-				case result := <-resultChan.Send:
-					fmt.Println(result)
-				case <-resultChan.Stop:
-					os.Exit(1)
-				}
-			}
-		}()
 	}
 }
