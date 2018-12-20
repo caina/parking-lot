@@ -3,7 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"github.com/parking-lot/app/client"
+	"github.com/parking-lot/app"
 	"github.com/parking-lot/app/commands/exit"
 	"github.com/parking-lot/app/commands/help"
 	"github.com/parking-lot/app/commands/initialization"
@@ -19,7 +19,7 @@ func main() {
 	fmt.Println("------------------- Welcome to parking lot! ---------------")
 	fmt.Println("------ use the command help to list all the options -------")
 
-	resultChan := client.Client{
+	resultChan := app.Client{
 		Send: make(chan string),
 		Stop: make(chan bool),
 	}

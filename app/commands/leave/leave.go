@@ -1,7 +1,7 @@
 package leave
 
 import (
-	. "github.com/parking-lot/app/client"
+	. "github.com/parking-lot/app"
 	"github.com/parking-lot/app/constants"
 	"github.com/parking-lot/app/model/ticket"
 	"strings"

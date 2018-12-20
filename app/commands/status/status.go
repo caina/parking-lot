@@ -2,11 +2,11 @@ package status
 
 import (
 	"bytes"
-	"github.com/parking-lot/app/client"
+	"github.com/parking-lot/app"
 	"strconv"
 )
 
-func Command(client *client.Client) {
+func Command(client *app.Client) {
 	builder := bytes.Buffer{}
 	builder.WriteString("------------ Status display ----------- \n")
 	builder.WriteString("------------ Available Slots: " + strconv.Itoa(client.Parking.GetAvailableSlots()) + " ------- \n")
