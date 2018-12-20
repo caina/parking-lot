@@ -73,6 +73,11 @@ func main() {
 				leave.Command(args[1:], &resultChan)
 				return
 			}()
+		default:
+			go func() {
+				resultChan.Send <- "FAIL: Command not found, type 'Help' to get a list of possible actions"
+				return
+			}()
 		}
 	}
 }

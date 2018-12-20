@@ -35,10 +35,6 @@ func (parkingLot *ParkingLot) Park(ticket Ticket) bool {
 	return true
 }
 
-func (parkingLot *ParkingLot) RemoveCar(ticketId string) {
-
-}
-
 func (parkingLot *ParkingLot) ToString() string {
 	buffer := bytes.Buffer{}
 
@@ -51,4 +47,8 @@ func (parkingLot *ParkingLot) ToString() string {
 
 func (parkingLot *ParkingLot) GetTickets() []Ticket {
 	return parkingLot.tickets
+}
+
+func (parkingLot *ParkingLot) SetTickets(tickets []Ticket) {
+	parkingLot.tickets = tickets
 }
