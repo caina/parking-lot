@@ -1,6 +1,8 @@
 package ticket
 
 import (
+	"errors"
+	"github.com/parking-lot/app/constants"
 	"github.com/parking-lot/app/model/car"
 	"time"
 )
@@ -18,12 +20,12 @@ func SueTicket() *Ticket {
 	}
 }
 
-func (ticket *Ticket) SetCar(car car.Car) bool {
+func (ticket *Ticket) SetCar(car car.Car) error {
 	if &ticket.car != nil {
 		ticket.car = car
-		return true
+		return nil
 	}
-	return false
+	return errors.New(constants.CarAlreadySetToTicket)
 }
 
 func (ticket *Ticket) ToString() string {

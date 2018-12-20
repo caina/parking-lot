@@ -2,6 +2,8 @@ package parking_lot
 
 import (
 	"bytes"
+	"errors"
+	"github.com/parking-lot/app/constants"
 	. "github.com/parking-lot/app/model/ticket"
 )
 
@@ -18,21 +20,21 @@ func (parkingLot *ParkingLot) GetAvailableSlots() int {
 	return parkingLot.slots - len(parkingLot.tickets)
 }
 
-func (parkingLot *ParkingLot) SetSlots(slots int) bool {
+func (parkingLot *ParkingLot) SetSlots(slots int) error {
 	if parkingLot.slots == 0 {
 		parkingLot.slots = slots
-		return true
+		return nil
 	}
-	return false
+	return errors.New(constants.ParkingAlreadySet)
 }
 
-func (parkingLot *ParkingLot) Park(ticket Ticket) bool {
+func (parkingLot *ParkingLot) Park(ticket Ticket) error {
 	if !parkingLot.CanPark() {
-		return false
+		return errors.New(constants.ParkingLotFull)
 	}
 
 	parkingLot.tickets = append(parkingLot.tickets, ticket)
-	return true
+	return nil
 }
 
 func (parkingLot *ParkingLot) ToString() string {

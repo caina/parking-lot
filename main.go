@@ -10,6 +10,7 @@ import (
 	"github.com/parking-lot/app/commands/leave"
 	"github.com/parking-lot/app/commands/park"
 	"github.com/parking-lot/app/commands/status"
+	"github.com/parking-lot/app/constants"
 	"os"
 	"strings"
 )
@@ -75,7 +76,7 @@ func main() {
 			}()
 		default:
 			go func() {
-				resultChan.Send <- "FAIL: Command not found, type 'Help' to get a list of possible actions"
+				resultChan.Send <- constants.CommandNotFound
 				return
 			}()
 		}

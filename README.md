@@ -4,7 +4,7 @@ this is the parking lot exercise done in golang. Its still on going.
 to run: `go build main.go`
 
 - [x] Basic structure using command pattern
-- [ ] All the basic commands working
+- [x] All the basic commands working
 - [ ] Parking lot with levels
 - [ ] Implementation for different kind of vehicles 
 

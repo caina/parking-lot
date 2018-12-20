@@ -2,6 +2,7 @@ package leave
 
 import (
 	. "github.com/parking-lot/app/client"
+	"github.com/parking-lot/app/constants"
 	"github.com/parking-lot/app/model/ticket"
 	"strings"
 )
@@ -17,5 +18,5 @@ func Command(args []string, client *Client) {
 	}
 
 	client.Parking.SetTickets(tickets)
-	client.Send <- "Good by!"
+	client.Send <- constants.CarLeftPark
 }

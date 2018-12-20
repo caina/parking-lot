@@ -2,6 +2,7 @@ package initialization
 
 import (
 	"github.com/parking-lot/app/client"
+	"github.com/parking-lot/app/constants"
 	"github.com/parking-lot/app/model/parking-lot"
 	"strconv"
 )
@@ -9,13 +10,13 @@ import (
 func Command(args []string, client *client.Client) {
 	slots, err := strconv.Atoi(args[0])
 	if err != nil {
-		client.Send <- "Fail: The slots must be a number!"
+		client.Send <- constants.SlotsMustBeNumber
 		return
 	}
 
 	parkingLot := parking_lot.ParkingLot{}
-	if canPark := parkingLot.SetSlots(slots); !canPark {
-		client.Send <- "Parking lot already set"
+	if err := parkingLot.SetSlots(slots); err != nil {
+		client.Send <- err.Error()
 		return
 	}
 
