@@ -9,4 +9,6 @@ const (
 	CarAlreadySetToTicket = "FAIL: This ticket already has an car set"
 	ExitMessage           = "Thanks for using Parking lot!"
 	CarLeftPark           = "Good by!"
+	ParkingLotGenerated   = "Parking lot generated with %c slots"
+	TicketGenerated       = "Ticket generated: %c"
 )

@@ -1,16 +1,17 @@
 package park
 
 import (
-	"github.com/parking-lot/app"
 	"github.com/parking-lot/app/constants"
 	"github.com/parking-lot/app/model/car"
+	"github.com/parking-lot/app/model/parking-lot"
 	"github.com/parking-lot/app/model/ticket"
+	"github.com/pkg/errors"
+	"strings"
 )
 
-func Command(args []string, client *app.Client) {
+func Command(args []string, lot *parking_lot.ParkingLot) (*string, error) {
 	if len(args) < 2 {
-		client.Send <- constants.CommandMalformatted
-		return
+		return nil, errors.New(constants.CommandMalformatted)
 	}
 
 	newTicket := ticket.SueTicket()
@@ -20,10 +21,10 @@ func Command(args []string, client *app.Client) {
 	}
 	_ = newTicket.SetCar(*parkingCar)
 
-	if err := client.Parking.Park(*newTicket); err != nil {
-		client.Send <- err.Error()
-		return
+	if err := lot.Park(*newTicket); err != nil {
+		return nil, err
 	}
 
-	client.Send <- "Ticket generated: " + newTicket.ToString()
+	output := strings.Replace(constants.TicketGenerated, "%c", newTicket.ToString(), 1)
+	return &output, nil
 }

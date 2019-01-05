@@ -2,10 +2,9 @@ package help
 
 import (
 	"bytes"
-	"github.com/parking-lot/app"
 )
 
-func Command(client *app.Client) {
+func Command() string {
 	buffer := bytes.Buffer{}
 	buffer.WriteString("list of commands available \n")
 	buffer.WriteString("-- init {number of slots} \n")
@@ -13,5 +12,5 @@ func Command(client *app.Client) {
 	buffer.WriteString("-- park {plate} {color} | park the car if we have any space left \n")
 	buffer.WriteString("-- leave {ticket-id} | remove the car from the park \n")
 
-	client.Send <- buffer.String()
+	return buffer.String()
 }

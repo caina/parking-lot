@@ -46,32 +46,54 @@ func main() {
 		switch args[0] {
 		case "help":
 			go func() {
-				help.Command(&resultChan)
+				result := help.Command()
+				resultChan.Send <- result
 				return
 			}()
 		case "exit":
 			go func() {
-				exit.Command(&resultChan)
+				message, exitBool := exit.Command()
+
+				resultChan.Send <- message
+				resultChan.Stop <- exitBool
 				return
 			}()
 		case "init":
 			go func() {
-				initialization.Command(args[1:], &resultChan)
+				newLot, err := initialization.Command(args[1:])
+				if err != nil {
+					fmt.Println(err.Error())
+					return
+				}
+
+				resultChan.Parking = *newLot
+				resultChan.Send <- strings.Replace(constants.ParkingLotGenerated, "%c", args[1:][0], 1)
 				return
 			}()
 		case "status":
 			go func() {
-				status.Command(&resultChan)
+				result := status.Command(resultChan.Parking)
+				resultChan.Send <- result
+
 				return
 			}()
 		case "park":
 			go func() {
-				park.Command(args[1:], &resultChan)
+				output, err := park.Command(args[1:], &resultChan.Parking)
+				if err != nil {
+					resultChan.Send <- err.Error()
+					return
+				}
+
+				resultChan.Send <- *output
 				return
 			}()
 		case "leave":
 			go func() {
-				leave.Command(args[1:], &resultChan)
+				tickets := leave.Command(args[1:], resultChan.Parking)
+
+				resultChan.Parking.SetTickets(tickets)
+				resultChan.Send <- constants.CarLeftPark
 				return
 			}()
 		default:

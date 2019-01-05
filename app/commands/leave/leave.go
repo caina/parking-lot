@@ -1,14 +1,13 @@
 package leave
 
 import (
-	. "github.com/parking-lot/app"
-	"github.com/parking-lot/app/constants"
+	. "github.com/parking-lot/app/model/parking-lot"
 	"github.com/parking-lot/app/model/ticket"
 	"strings"
 )
 
-func Command(args []string, client *Client) {
-	currentTickets := client.Parking.GetTickets()
+func Command(args []string, lot ParkingLot) []ticket.Ticket {
+	currentTickets := lot.GetTickets()
 	tickets := make([]ticket.Ticket, 0)
 
 	for i := 0; i < len(currentTickets); i++ {
@@ -17,6 +16,5 @@ func Command(args []string, client *Client) {
 		}
 	}
 
-	client.Parking.SetTickets(tickets)
-	client.Send <- constants.CarLeftPark
+	return tickets
 }

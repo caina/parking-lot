@@ -2,16 +2,16 @@ package status
 
 import (
 	"bytes"
-	"github.com/parking-lot/app"
+	"github.com/parking-lot/app/model/parking-lot"
 	"strconv"
 )
 
-func Command(client *app.Client) {
+func Command(lot parking_lot.ParkingLot) string {
 	builder := bytes.Buffer{}
 	builder.WriteString("------------ Status display ----------- \n")
-	builder.WriteString("------------ Available Slots: " + strconv.Itoa(client.Parking.GetAvailableSlots()) + " ------- \n")
+	builder.WriteString("------------ Available Slots: " + strconv.Itoa(lot.GetAvailableSlots()) + " ------- \n")
 
 	builder.WriteString("------------ Parked cars -------------- \n")
-	builder.WriteString(client.Parking.ToString())
-	client.Send <- builder.String()
+	builder.WriteString(lot.ToString())
+	return builder.String()
 }
