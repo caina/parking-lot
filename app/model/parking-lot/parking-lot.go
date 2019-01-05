@@ -28,6 +28,10 @@ func (parkingLot *ParkingLot) SetSlots(slots int) error {
 	return errors.New(constants.ParkingAlreadySet)
 }
 
+func (parkingLot *ParkingLot) GetSlots() int {
+	return parkingLot.slots
+}
+
 func (parkingLot *ParkingLot) Park(ticket Ticket) error {
 	if !parkingLot.CanPark() {
 		return errors.New(constants.ParkingLotFull)

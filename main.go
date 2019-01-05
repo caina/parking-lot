@@ -79,13 +79,14 @@ func main() {
 			}()
 		case "park":
 			go func() {
-				output, err := park.Command(args[1:], &resultChan.Parking)
+				ticket, err := park.Command(args[1:], &resultChan.Parking)
 				if err != nil {
 					resultChan.Send <- err.Error()
 					return
 				}
 
-				resultChan.Send <- *output
+				_ = resultChan.Parking.Park(*ticket)
+				resultChan.Send <- strings.Replace(constants.TicketGenerated, "%c", ticket.ToString(), 1)
 				return
 			}()
 		case "leave":
