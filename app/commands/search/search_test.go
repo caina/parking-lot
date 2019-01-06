@@ -13,10 +13,10 @@ func TestSearch(t *testing.T) {
 	_ = lot.SetSlots(3)
 
 	ticket1, _ := park.Command(strings.Fields("HHH-TT red"), &lot)
-	_ = lot.Park(*ticket1)
+	lot.Park(*ticket1)
 
 	ticket2, _ := park.Command(strings.Fields("HHH-TT blue"), &lot)
-	_ = lot.Park(*ticket2)
+	lot.Park(*ticket2)
 
 	tickets, _ := search.Command(strings.Fields("red"), &lot)
 	if len(tickets) != 1 {
@@ -32,7 +32,7 @@ func TestSearchNoColor(t *testing.T) {
 	_ = lot.SetSlots(3)
 
 	ticket1, _ := park.Command(strings.Fields("HHH-TT red"), &lot)
-	_ = lot.Park(*ticket1)
+	lot.Park(*ticket1)
 
 	if _, err := search.Command(strings.Fields(""), &lot); err == nil {
 		t.Error("Wrong command should return error ")
