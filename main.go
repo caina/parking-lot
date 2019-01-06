@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"github.com/parking-lot/app"
 	"github.com/parking-lot/app/commands/exit"
@@ -9,6 +10,7 @@ import (
 	"github.com/parking-lot/app/commands/initialization"
 	"github.com/parking-lot/app/commands/leave"
 	"github.com/parking-lot/app/commands/park"
+	"github.com/parking-lot/app/commands/search"
 	"github.com/parking-lot/app/commands/status"
 	"github.com/parking-lot/app/constants"
 	"os"
@@ -96,6 +98,20 @@ func main() {
 				resultChan.Parking.SetTickets(tickets)
 				resultChan.Send <- constants.CarLeftPark
 				return
+			}()
+		case "search":
+			go func() {
+				tickets, err := search.Command(args[1:], &resultChan.Parking)
+				if err != nil {
+					resultChan.Send <- err.Error()
+					return
+				}
+
+				buffer := bytes.Buffer{}
+				for _, ticket := range tickets {
+					buffer.WriteString(ticket.ToString() + "\n")
+				}
+				resultChan.Send <- buffer.String()
 			}()
 		default:
 			go func() {
