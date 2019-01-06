@@ -87,13 +87,17 @@ func main() {
 					return
 				}
 
-				_ = resultChan.Parking.Park(*ticket)
+				resultChan.Parking.Park(*ticket)
 				resultChan.Send <- strings.Replace(constants.TicketGenerated, "%c", ticket.ToString(), 1)
 				return
 			}()
 		case "leave":
 			go func() {
-				tickets := leave.Command(args[1:], resultChan.Parking)
+				tickets, errors := leave.Command(args[1:], resultChan.Parking)
+				if errors != nil {
+					resultChan.Send <- errors.Error()
+					return
+				}
 
 				resultChan.Parking.SetTickets(tickets)
 				resultChan.Send <- constants.CarLeftPark

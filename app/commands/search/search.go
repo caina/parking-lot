@@ -21,5 +21,9 @@ func Command(args []string, lot *parking_lot.ParkingLot) ([]Ticket, error) {
 		}
 	}
 
+	if len(ticketsFound) == 0 {
+		return nil, errors.New(constants.NoCarFound)
+	}
+
 	return ticketsFound, nil
 }

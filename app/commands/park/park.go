@@ -13,6 +13,10 @@ func Command(args []string, lot *parking_lot.ParkingLot) (*Ticket, error) {
 		return nil, errors.New(constants.CommandMalformatted)
 	}
 
+	if !lot.CanPark() {
+		return nil, errors.New(constants.ParkingLotFull)
+	}
+
 	var position = 1
 	for position < len(lot.GetTickets())+1 {
 		notFound := true

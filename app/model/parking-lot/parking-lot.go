@@ -32,13 +32,8 @@ func (parkingLot *ParkingLot) GetSlots() int {
 	return parkingLot.slots
 }
 
-func (parkingLot *ParkingLot) Park(ticket Ticket) error {
-	if !parkingLot.CanPark() {
-		return errors.New(constants.ParkingLotFull)
-	}
-
+func (parkingLot *ParkingLot) Park(ticket Ticket) {
 	parkingLot.tickets = append(parkingLot.tickets, ticket)
-	return nil
 }
 
 func (parkingLot *ParkingLot) ToString() string {
